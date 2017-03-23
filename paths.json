@@ -1,0 +1,6 @@
+{
+  "appname": {
+    "entry": "./src/app/app.js"
+  },
+  "app": "appname"
+}
