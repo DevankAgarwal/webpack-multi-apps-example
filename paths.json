@@ -2,5 +2,8 @@
   "appname": {
     "entry": "./src/app/app.js"
   },
-  "app": "appname"
+  "crpo": {
+    "entry": "./src/crpo/index.js"
+  },
+  "app": "crpo"
 }

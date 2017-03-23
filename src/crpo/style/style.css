@@ -11,12 +11,12 @@
 }
 
 body {
-  background: #0147A7;
-  color: #fff;
+  color: #555;
 }
 
 a {
   color: #03A9F4;
+  text-decoration: none;
 }
 
 main {
