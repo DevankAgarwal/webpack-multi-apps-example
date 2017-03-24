@@ -4,7 +4,7 @@
 
 What you need to run this app:
 * `node`, `npm` and `yarn`
-* Ensure you're running Node (`v4.1.x`+) and NPM (`2.14.x`+)
+* Ensure you're running Node (`v5.10.x`+) and NPM (`2.14.x`+)
 
 ## Installing
 
