@@ -1,9 +1,12 @@
 {
-  "appname": {
-    "entry": "./src/app/app.js"
+  "someApp": {
+    "entry": "./src/someApp/app.js"
   },
   "crpo": {
     "entry": "./src/crpo/index.js"
   },
-  "app": "crpo"
+  "verifyApp": {
+    "entry": "./src/verifyApp/index.js"
+  },
+  "app": "verifyApp"
 }

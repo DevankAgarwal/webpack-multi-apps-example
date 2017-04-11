@@ -1,9 +1,15 @@
 class AppCtrl {
   constructor () {
-    this.url = 'http://hirepro.in'
-    this.title = 'Hello from avnsh !'
+    this.phoneWithUs = '888****818'
+  }
+  sendOtp () {
+    this.otpSent = true
+  }
+  confirmOtp () {
+    this.isConfirmed = true
   }
 }
+
 export const app = {
   controller: AppCtrl,
   controllerAs: 'app',

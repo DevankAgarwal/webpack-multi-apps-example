@@ -7,9 +7,20 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 
+var rimraf = require('rimraf')
+var path = require('path')
+
 var pathOptions = require('./paths')
 
 var app = pathOptions.app
+
+/**
+ * Deleting dist/<app> using rimraf
+ */
+rimraf(path.join(__dirname, 'dist', app), function (err, success) {
+  console.log(err)
+})
+
 /**
  * Env
  * Get npm lifecycle event to identify the environment
@@ -44,8 +55,7 @@ module.exports = (function makeWebpackConfig () {
    */
   config.output = isTest ? {} : {
     // Absolute output directory
-    // eslint-disable-next-line
-    path: __dirname + '/dist/' + app,
+    path: path.join(__dirname, 'dist', app),
 
     // Output path from the view of the page
     // Uses webpack-dev-server in development
@@ -183,7 +193,7 @@ module.exports = (function makeWebpackConfig () {
     // Render index.html
     config.plugins.push(
       new HtmlWebpackPlugin({
-        template: './public/index.html',
+        template: `./public/${app}/index.html`,
         inject: 'body'
       }),
 
@@ -208,8 +218,7 @@ module.exports = (function makeWebpackConfig () {
       // Copy assets from the public folder
       // Reference: https://github.com/kevlened/copy-webpack-plugin
       new CopyWebpackPlugin([{
-        // eslint-disable-next-line
-        from: __dirname + '/public'
+        from: path.join(__dirname, 'public', app)
       }])
     )
   }
@@ -222,9 +231,9 @@ module.exports = (function makeWebpackConfig () {
   config.devServer = {
     contentBase: './public',
     stats: 'minimal',
-    proxy: {
-      '/py': 'http://10.0.3.156'
-    },
+    // proxy: {
+    //   '/py': 'http://10.0.3.156'
+    // },
     overlay: true
   }
 

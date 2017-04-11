@@ -1,0 +1,40 @@
+<md-toolbar md-scroll-shrink md-whiteframe="1" ng-if="true">
+	<div class="md-toolbar-tools">
+		<h3>
+			<span>Welcome to Hirepro Consulting Pvt Ltd</span>
+		</h3>
+	</div>
+</md-toolbar>
+<md-content layout="row" layout-align="center center">
+	<md-card flex-xs="100" flex-sm="66" flex="50" ng-show="!app.isConfirmed">
+		<form ng-submit="app.confirmOtp()">
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-title">Please verify your phone number</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<md-input-container class="md-block">
+					<label>OPT will be sent to the following number</label>
+					<input ng-model="app.phoneWithUs" disabled>
+					<i class="md-caption">* Contact admin if you think this isn't your registered phone number</i>
+				</md-input-container>
+
+				<md-input-container class="md-block" ng-if="app.otpSent">
+					<label>Enter OTP</label>
+					<input type="number" ng-model="app.opt">
+				</md-input-container>
+			</md-card-content>
+			<md-card-actions layout="row" layout-align="end center">
+				<md-button class="md-primary" ng-click="app.sendOtp()">{{app.otpSent ? 'Resend' : 'Send'}} OTP</md-button>
+				<md-button class="md-raised md-primary" ng-if="app.otpSent" type="submit">Verify</md-button>
+			</md-card-actions>
+		</form>
+	</md-card>
+	<md-card flex-xs="100" flex-sm="66" flex="50" ng-show="app.isConfirmed">
+		<md-card-content layout="column" layout-align="center center" style="padding: 50px 75px 75px;">
+			<i class="material-icons" style="font-size: 8em;font-weight: bold;">done</i>
+			<p style="text-align: center;">Success, your phone number is now verified</p>
+		</md-card-content>
+	</md-card>
+</md-content>
