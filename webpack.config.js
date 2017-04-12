@@ -193,7 +193,7 @@ module.exports = (function makeWebpackConfig () {
     // Render index.html
     config.plugins.push(
       new HtmlWebpackPlugin({
-        template: `./public/${app}/index.html`,
+        template: './public/index.html',
         inject: 'body'
       }),
 
@@ -218,7 +218,7 @@ module.exports = (function makeWebpackConfig () {
       // Copy assets from the public folder
       // Reference: https://github.com/kevlened/copy-webpack-plugin
       new CopyWebpackPlugin([{
-        from: path.join(__dirname, 'public', app)
+        from: path.join(__dirname, 'public')
       }])
     )
   }

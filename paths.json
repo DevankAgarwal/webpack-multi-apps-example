@@ -8,5 +8,8 @@
   "verifyApp": {
     "entry": "./src/verifyApp/index.js"
   },
-  "app": "verifyApp"
+  "candidateSelfSchedule": {
+    "entry": "./src/candidateSelfSchedule/index.js"
+  },
+  "app": "candidateSelfSchedule"
 }
