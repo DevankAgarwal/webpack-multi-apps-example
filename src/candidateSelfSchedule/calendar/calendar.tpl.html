@@ -1,0 +1,65 @@
+<md-content layout="row" layout-align="center center">
+  <!-- selection card -->
+  <md-card flex-xs="100" flex-sm="80" flex="66" ng-if="!vm.dateSelected">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-title">Please select a slot at which you'd like your interview to be scheduled</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <div layout="column">
+        <div layout="row" layout-xs="column" ng-repeat-start="(date, slots) in vm.slots[vm.page.current]">
+          <div flex="20" flex-xs="100" style="margin-top: 10px;">
+            <div class="md-subhead">{{vm.moment(date, 'DD-MM-YYYY').format('dddd')}}</div>
+            <div class="md-caption" style="opacity: 0.5;">{{vm.moment(date, 'DD-MM-YYYY').format('Do MMMM')}}</div>
+          </div>
+          <div flex="80" flex-xs="100" layout="row" layout-wrap>
+            <md-button class="md-primary" ng-click="vm.dateSelected = true" ng-repeat="slot in slots">{{slot.fromTime}}</md-button>
+            <!--<md-button class="md-primary">10:30 AM</md-button>
+            <md-button class="md-primary">11:00 AM</md-button>
+            <md-button class="md-primary">11:30 AM</md-button>
+            <md-button class="md-primary">12:00 PM</md-button>
+            <md-button class="md-primary">12:30 PM</md-button>
+            <md-button class="md-primary">13:00 PM</md-button>
+            <md-button class="md-primary">13:30 PM</md-button>
+            <md-button class="md-primary">14:00 PM</md-button>
+            <md-button class="md-primary">14:30 PM</md-button>
+            <md-button class="md-primary">15:00 PM</md-button>
+            <md-button class="md-primary">15:30 PM</md-button>
+            <md-button class="md-primary">16:00 PM</md-button>
+            <md-button class="md-primary">16:30 PM</md-button>
+            <md-button class="md-primary">17:00 PM</md-button>
+            <md-button class="md-primary">17:30 PM</md-button>
+            <md-button class="md-primary">18:00 PM</md-button>-->
+          </div>
+        </div>
+        <md-divider ng-repeat-end=""></md-divider>
+        <!-- <md-divider></md-divider> -->
+      </div>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="space-between center">
+      <md-button class="md-raised md-primary">Previous 3 days</md-button>
+      <md-button class="md-raised md-primary">Next 3 days</md-button>
+    </md-card-actions>
+  </md-card>
+
+  <!-- confirmation card -->
+  <md-card flex-xs="100" flex-sm="80" flex="66" ng-if="vm.dateSelected">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-title">Scheduling interview on</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content layout="column" layout-xs="column" layout-align="center center" style="min-height: 450px;">
+      <div style="text-align: center;">
+        <div class="md-display-1">Friday</div>
+        <div class="md-headline" style="opacity: 0.5;">12th April</div>
+      </div>
+      <div class="md-display-3" style="margin: 20px 0;">10:00 AM</div>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="center center">
+      <md-button class="md-primary" ng-click="vm.dateSelected = false">Back</md-button>
+      <md-button class="md-raised md-primary">Confirm</md-button>
+    </md-card-actions>
+
+</md-content>

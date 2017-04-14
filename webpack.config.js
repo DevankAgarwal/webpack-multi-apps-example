@@ -29,7 +29,7 @@ var ENV = process.env.npm_lifecycle_event
 var isTest = ENV === 'test' || ENV === 'test-watch'
 var isProd = ENV === 'build'
 
-module.exports = (function makeWebpackConfig () {
+module.exports = (function makeWebpackConfig() {
   /**
    * Config
    * Reference: http://webpack.github.io/docs/configuration.html
@@ -122,8 +122,8 @@ module.exports = (function makeWebpackConfig () {
       loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({
         fallbackLoader: 'style-loader',
         loader: [
-          {loader: 'css-loader', query: {sourceMap: true}},
-          {loader: 'postcss-loader'}
+          { loader: 'css-loader', query: { sourceMap: true } },
+          { loader: 'postcss-loader' }
         ]
       })
     }, {
@@ -168,8 +168,8 @@ module.exports = (function makeWebpackConfig () {
    * Reference: https://github.com/postcss/autoprefixer-core
    * Add vendor prefixes to your css
    */
-   // NOTE: This is now handled in the `postcss.config.js`
-   //       webpack2 has some issues, making the config file necessary
+  // NOTE: This is now handled in the `postcss.config.js`
+  //       webpack2 has some issues, making the config file necessary
 
   /**
    * Plugins
@@ -200,7 +200,7 @@ module.exports = (function makeWebpackConfig () {
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Extract css files
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin({filename: 'css/[name].css', disable: !isProd, allChunks: true})
+      new ExtractTextPlugin({ filename: 'css/[name].css', disable: !isProd, allChunks: true })
     )
   }
 
@@ -231,9 +231,12 @@ module.exports = (function makeWebpackConfig () {
   config.devServer = {
     contentBase: './public',
     stats: 'minimal',
-    // proxy: {
-    //   '/py': 'http://10.0.3.156'
-    // },
+    proxy: {
+      '/py': {
+        target: 'https://amsin.hirepro.in/',
+        changeOrigin: true
+      }
+    },
     overlay: true
   }
 

@@ -1,5 +1,5 @@
 class AppCtrl {
-  constructor () {
+  constructor() {
     this.name = 'Self Schedule app'
   }
 }
