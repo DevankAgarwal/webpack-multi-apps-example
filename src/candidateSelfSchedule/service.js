@@ -8,10 +8,12 @@ export function service($http) {
       futureDays: 15
     },
     apis: {
-      getSlots: getSlots
+      getSlots: getSlots,
+      getBasicInfo: getBasicInfo
     },
     urls: {
-      getOpenSlots: '/py/crpo/api/v1/interview/getallinterviewerslots?'
+      getOpenSlots: '/py/crpo/api/v1/interview/getallinterviewerslots?',
+      basicInfo: '/py/crpo/api/v1/interview/get/basicinfo?'
     },
     common: {
       http: {
@@ -36,6 +38,10 @@ export function service($http) {
 
   function getOpenSlots() {
     return get(service.urls.getOpenSlots + 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5kaWRhdGVJZCI6MTExMzI2MCwic3RhZ2VJZCI6MjAwNTIsImpvYklkIjoyNjkzN30.TToaDzS0CNfOYZLaEqD8EPR3SUj02HG6IhxSW8Nzlyk');
+  }
+
+  function getBasicInfo() {
+    return get(service.urls.basicInfo + 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYW5kaWRhdGVJZCI6MTExMzI2MCwic3RhZ2VJZCI6MjAwNTIsImpvYklkIjoyNjkzN30.TToaDzS0CNfOYZLaEqD8EPR3SUj02HG6IhxSW8Nzlyk');
   }
 
   function getSlots() {
