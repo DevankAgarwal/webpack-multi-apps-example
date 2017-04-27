@@ -9,7 +9,8 @@
     "entry": "./src/verifyApp/index.js"
   },
   "candidateSelfSchedule": {
-    "entry": "./src/candidateSelfSchedule/index.js"
+    "entry": "./src/candidateSelfSchedule/index.js",
+    "publicPath": "interview-schedule"
   },
   "app": "candidateSelfSchedule"
 }
