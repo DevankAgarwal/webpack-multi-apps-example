@@ -1,6 +1,6 @@
-<md-content layout="row" layout-align="center center">
+<md-content layout="row" layout-align="center center" ng-if="vm.slotsAvailable && !vm.alreadyScheduled">
   <!-- selection card -->
-  <md-card flex-xs="100" flex-sm="80" flex="66" ng-if="!vm.slotSelected">
+  <md-card flex-xs="100" flex-sm="80" flex="66" ng-if="!vm.slotSelected && !vm.scheduled">
     <md-card-title>
       <md-card-title-text>
         <span class="md-title">Please select a slot at which you'd like your interview to be scheduled</span>
@@ -26,24 +26,24 @@
       </div>
     </md-card-content>
     <md-card-actions layout="row" layout-align="space-between center">
-      <md-button class="md-raised md-primary" ng-disabled="vm.page.current === 1" ng-click="vm.previous()">Previous 3 days</md-button>
+      <md-button class="md-raised md-primary" ng-disabled="vm.page.current === 0" ng-click="vm.previous()">Previous 3 days</md-button>
       <md-button class="md-raised md-primary" ng-disabled="vm.page.current === vm.page.max" ng-click="vm.next()">Next 3 days</md-button>
     </md-card-actions>
   </md-card>
 
   <!-- confirmation card -->
-  <md-card flex-xs="100" flex-sm="80" flex="66" ng-if="vm.slotSelected">
+  <md-card flex-xs="100" flex-sm="80" flex="66" ng-if="vm.slotSelected && !vm.scheduled">
     <md-card-title>
       <md-card-title-text>
         <span class="md-title">Scheduling interview on</span>
       </md-card-title-text>
     </md-card-title>
-    <md-card-content layout="column" layout-xs="column" layout-align="center center" style="min-height: 450px;">
+    <md-card-content layout="column" layout-xs="column" layout-align="center center" style="min-height: 250px;">
       <div style="text-align: center;">
         <div class="md-display-1">{{vm.moment(vm.selectedSlot.date,'DD-MM-YYYY').format('dddd')}}</div>
         <div class="md-headline" style="opacity: 0.5;">{{vm.moment(vm.selectedSlot.date,'DD-MM-YYYY').format('Do, MMMM')}}</div>
       </div>
-      <div class="md-display-2" style="margin: 20px 0;">({{vm.moment(vm.selectedSlot.fromTime,'HH:mm:ss').format('hh:mm A')}})</div>
+      <div class="md-display-2" style="margin: 20px 0;">{{vm.moment(vm.selectedSlot.fromTime,'HH:mm:ss').format('hh:mm A')}}</div>
     </md-card-content>
     <md-card-actions layout="row" layout-align="center center">
       <md-button class="md-primary" ng-click="vm.unSelectSlot()">Back</md-button>
@@ -51,4 +51,32 @@
     </md-card-actions>
   </md-card>
 
+  <!--Schedule-->
+  <md-card flex-xs="100" flex-sm="80" flex="66" ng-if="vm.scheduled">
+    <md-card-content layout="column" layout-xs="column" layout-align="center center" style="min-height: 250px;">
+      <div style="text-align: center;">
+        <i class="material-icons">check_circle</i>
+      </div>
+    </md-card-content>
+  </md-card>
+
+</md-content>
+<md-content layout="row" layout-align="center center" ng-if="vm.alreadyScheduled">
+  <md-card flex-xs="100" flex-sm="80" flex="66">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-title">Scheduled on</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content layout="column" layout-xs="column" layout-align="center center" style="min-height: 250px;">
+      <div style="text-align: center;">
+        <div class="md-display-1">{{vm.moment(vm.scheduledSlot.date,'DD-MM-YYYY').format('dddd')}}</div>
+        <div class="md-headline" style="opacity: 0.5;">{{vm.moment(vm.scheduledSlot.date,'DD-MM-YYYY').format('Do, MMMM')}}</div>
+      </div>
+      <div class="md-display-2" style="margin: 20px 0;">{{vm.moment(vm.scheduledSlot.fromTime,'HH:mm:ss').format('hh:mm A')}}</div>
+    </md-card-content>
+    <!--<md-card-actions layout="row" layout-align="center center">
+      <md-button class="md-raised md-primary" ng-click="vm.changeSlot()">Change</md-button>
+    </md-card-actions>-->
+  </md-card>
 </md-content>
