@@ -1,8 +1,8 @@
-import _ from 'lodash'
+import { assign, size, spread, chain } from 'lodash'
 import moment from 'moment'
 
-export function service($http, $window) {
-  var service = {
+export function service($http, $window, $q) {
+  const service = {
     constants: {
       slotDuration: 30,
       futureDays: 15,
@@ -24,69 +24,92 @@ export function service($http, $window) {
         get: get
       }
     }
-  };
-  return service;
+  }
+  const promises = {}
+  return service
 
   function post(url, json, config) {
-    return $http.post(url, json, _.assign({}, config, {
+    const key = url + JSON.stringify(json)
+    if (promises.hasOwnProperty(key)) {
+      return promises[key]
+    }
+    promises[key] = $http.post(url, json, assign({}, config, {
       headers: {
         'T-Alias': service.constants.tenantAlias
       }
-    })).then(res => res.data)
+    })).then(res => {
+      delete promises[key]
+      return res.data
+    })
+
+    return promises[key]
   }
 
   function get(url) {
-    return $http.get(url, {
+    const key = url;
+    if (promises.hasOwnProperty(key)) {
+      return promises[key]
+    }
+    promises[key] = $http.get(url, {
       headers: {
         'T-ALIAS': service.constants.tenantAlias
       }
-    }).then(res => res.data)
+    }).then(res => {
+      delete promises[key]
+      return res.data
+    })
+
+    return promises[key]
   }
 
   function getOpenSlots() {
-    return get(service.urls.getOpenSlots + service.constants.token);
+    return get(service.urls.getOpenSlots + service.constants.token)
   }
 
   function schedule(request) {
-    return post(service.urls.schedule + service.constants.token, request);
+    return post(service.urls.schedule + service.constants.token, request)
   }
 
   function getBasicInfo() {
     service.constants.token = $window.location.hash.split('/')[2].substr(1, $window.location.hash.split('/')[2].length)
     service.constants.tenantAlias = $window.location.hash.split('/')[1]
     return get(service.urls.basicInfo + service.constants.token).catch(function (res) {
-      console.log(res);
+      console.log(res)
     });
   }
 
   function getSlots() {
     var slots = [], savedSlots;
-    return getOpenSlots().then(function (res) {
-      if (!res || !res.slots || !res.slots.length) {
+    return $q.all([
+      getOpenSlots(),
+      getBasicInfo()
+    ]).then(spread(function (openSlots, basicInfo) {
+      if (!openSlots || !openSlots.slots || !openSlots.slots.length) {
         return {
           slots: []
         }
       }
       var response = {}
-      if (res.engagedSlots && _.size(res.engagedSlots)) {
-        response.engaged = res.engagedSlots[0]
+      if (openSlots.engagedSlots && size(openSlots.engagedSlots)) {
+        response.engaged = openSlots.engagedSlots[0]
       }
-      savedSlots = _.chain(res.slots).mapKeys('date').mapValues('times').value()
-      for (let i = 0; i < service.constants.futureDays; i++) {
+      savedSlots = chain(openSlots.slots).mapKeys('date').mapValues('times').value()
+      for (let i = 0; i < (basicInfo.data.preferences.candidateSlotDays || service.constants.futureDays); i++) {
         slots.push({
           date: moment().add(i, 'days').format('DD-MM-YYYY'),
           times: savedSlots[moment().add(i, 'days').format('DD-MM-YYYY')]
-        });
+        })
       }
-      response.slots = _.chain(slots)
+      response.slots = chain(slots)
         .chunk(3)
-        .map(chunk => _.chain(chunk).
+        .map(chunk => chain(chunk).
           mapKeys('date').
           mapValues('times').
           value()
         )
         .value()
+      response.canSchedule = basicInfo.data.canSchedule
       return response
-    });
+    }))
   }
 }

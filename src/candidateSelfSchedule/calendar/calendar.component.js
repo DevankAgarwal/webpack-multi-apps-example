@@ -12,10 +12,10 @@ class CalendarCtrl {
       max: 0,
       min: 1,
       current: 0
-    };
+    }
     service.apis.getSlots().then(function (res) {
       if (res.engaged) {
-        vm.alreadyScheduled = true;
+        vm.alreadyScheduled = true
         vm.scheduledSlot = res.engaged
       } else {
         vm.slotsAvailable = res.slots.length
@@ -39,16 +39,16 @@ class CalendarCtrl {
       time: this.selectedSlot.fromTime
     }).then((res) => {
       if (res && res.statusId === 200) {
-        this.scheduled = true;
+        this.scheduled = true
       }
-    });
+    })
   }
 
   selectSlot(date, slot) {
     this.slotSelected = true
     this.selectedSlot = assign({}, {
       date: date
-    }, slot);
+    }, slot)
   }
 
   unSelectSlot() {
