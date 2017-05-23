@@ -18,9 +18,13 @@ class CalendarCtrl {
         vm.alreadyScheduled = true
         vm.scheduledSlot = res.engaged
       } else {
-        vm.slotsAvailable = res.slots.length
-        vm.slots = res.slots
-        vm.page.max = vm.slots.length - 1
+        if (res.canSchedule) {
+          vm.slotsAvailable = res.slots.length
+          vm.slots = res.slots
+          vm.page.max = vm.slots.length - 1
+        } else {
+          vm.cantSchedule = true
+        }
       }
     })
   }

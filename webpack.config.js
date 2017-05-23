@@ -235,7 +235,7 @@ module.exports = (function makeWebpackConfig() {
     stats: 'minimal',
     proxy: {
       '/py': {
-        target: 'http://amsqa.hirepro.in/',
+        target: 'https://amsin.hirepro.in/',
         changeOrigin: true
       }
     },

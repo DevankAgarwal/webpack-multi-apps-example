@@ -61,6 +61,13 @@
   </md-card>
 
 </md-content>
+<md-content layout="row" layout-align="center center" ng-if="vm.cantSchedule">
+  <md-card flex-xs="100" flex-sm="80" flex="66">
+    <md-card-content layout="column" layout-xs="column" layout-align="center center" style="min-height: 250px;">
+      Can't schedule interview at the moment. Please try again later or contact support.
+    </md-card-content>
+  </md-card>
+</md-content>
 <md-content layout="row" layout-align="center center" ng-if="vm.alreadyScheduled">
   <md-card flex-xs="100" flex-sm="80" flex="66">
     <md-card-title>
